@@ -1,0 +1,22 @@
+{
+	"name": "ecdsa-server",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node ."
+	},
+	"keywords": [],
+	"author": {
+		"name": "Krauser III",
+		"email": "detroitmetalcrypto@gmail.com"
+	},
+	"license": "AGPLv3",
+	"dependencies": {
+		"api": "^5.0.8",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.1",
+		"keccak256": "^1.0.6"
+	}
+}
