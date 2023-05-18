@@ -92,6 +92,50 @@ app.post("/custom", async (req, res, next) => {
 	}
 });
 
+app.get("/compare", async (req, res, next) => {
+	try {
+		const { buy, sell } = req.query;
+		const { data: cData } = await sdk
+			.getCollectionsV5({
+				contract: [buy, sell],
+			})
+			.catch((e) => {
+				next(e);
+				res.status(500).send(e);
+			});
+		res.status(200).send(cData.collections);
+	} catch (e) {
+		next(e);
+		res.status(500).send(e);
+	}
+});
+
+app.get("/listings", async (req, res, next) => {
+	try {
+		const { max, contract } = req.query;
+
+		const { data: listingData } = await sdk
+			.getOrdersAsksV4({
+				contracts: [contract],
+				status: "active",
+				includeCriteriaMetadata: "true",
+				excludeEOA: "true",
+				sortBy: "price",
+				accept: "*/*",
+				source: "opensea.io",
+				limit: max,
+			})
+			.catch((e) => {
+				next(e);
+				res.status(500).send(e);
+			});
+		res.status(200).send(listingData.orders);
+	} catch (e) {
+		next(e);
+		res.status(500).send(e);
+	}
+});
+
 app.listen(port, () => {
 	console.log(`Listening on port ${port}!`);
 });
